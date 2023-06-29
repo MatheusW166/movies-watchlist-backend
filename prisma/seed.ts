@@ -47,6 +47,10 @@ async function isPopulated(): Promise<boolean> {
 }
 
 async function seed() {
+  if (await isPopulated()) {
+    return;
+  }
+
   const response = await axios.request(options);
   const data = response.data;
 
@@ -56,10 +60,6 @@ async function seed() {
 
   const results: [] = data.results;
   const movies: Movie[] = results.map(dtoToMovie);
-
-  if (await isPopulated()) {
-    return;
-  }
 
   await prisma.movie.createMany({
     data: movies
