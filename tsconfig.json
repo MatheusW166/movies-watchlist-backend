@@ -7,7 +7,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "rootDir": "src",
     "baseUrl": "src",
     "paths": {
       "@/*": [
