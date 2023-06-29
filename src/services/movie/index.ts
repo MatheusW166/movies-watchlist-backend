@@ -1,23 +1,42 @@
 import { Movie, MovieCreateResult } from "./types";
+import { ConflictError, NotFoundError } from "@/errors";
+import movieRepository from "@/repositories/movie";
 
 async function create(movie: Movie): Promise<MovieCreateResult> {
-  // TODO: implementar criação de filmes
-  throw "";
+  const movieFound = await movieRepository.findFirstByTitle(movie.title);
+
+  if (movieFound !== null) {
+    throw new ConflictError(["this movie already exists"]);
+  }
+
+  return await movieRepository.create(movie);
 }
 
 async function deleteById(id: number): Promise<void> {
-  // TODO: implementar exclusão de filmes
-  throw "";
+  const movieFound = await movieRepository.findById(id);
+
+  if (movieFound === null) {
+    throw new NotFoundError(["movie not found"]);
+  }
+
+  await movieRepository.deleteById(id);
 }
 
-async function findByTitle(title: string): Promise<MovieCreateResult[]> {
-  // TODO: implementar busca de filmes
-  throw "";
+async function findManyByTitle(title: string): Promise<MovieCreateResult[]> {
+  return await movieRepository.findManyByTitle(title);
 }
 
-async function markAsWatched(userId: number, movieId: number): Promise<void> {
-  // TODO: implementar watchlist de filmes
-  throw "";
+async function findAll(): Promise<MovieCreateResult[]> {
+  return await movieRepository.findAll();
 }
+
+const movieServices = {
+  create,
+  deleteById,
+  findManyByTitle,
+  findAll
+};
+
 
 export * from "./types";
+export default movieServices;
