@@ -10,13 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-	id Int @id @default(autoincrement())
-	name String @unique
-
-	movies Watched[]
-}
-
 model Movie {
 	id Int @id @default(autoincrement())
 	title String
@@ -25,16 +18,4 @@ model Movie {
 	plot String
 	genre String
 	poster String
-
-	users Watched[]
-}
-
-model Watched {
-	userId Int
-	movieId Int
-	user User @relation(fields: [userId], references: [id])
-	movie Movie @relation(fields: [movieId], references: [id])
-	watchedAt DateTime @default(now())
-
-	@@id([userId, movieId])
 }
