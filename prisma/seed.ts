@@ -67,6 +67,5 @@ async function seed(): Promise<void> {
 }
 
 seed()
-  .then(() => console.log("🌱 database populated"))
   .catch((err) => console.log(err))
   .finally(() => prisma.$disconnect());
