@@ -13,6 +13,7 @@
     "import/order": "warn",
     "import/no-named-as-default-member": "off",
     "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/explicit-function-return-type": "error",
     "import/newline-after-import": [
       "error"
     ],

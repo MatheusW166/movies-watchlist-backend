@@ -3,24 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import axios, { AxiosRequestConfig } from "axios";
 import { Movie } from "@/services/movie";
 
-const options: AxiosRequestConfig = {
-  method: "GET",
-  baseURL: process.env.MOVIES_API_URL,
-  headers: {
-    "X-RapidAPI-Key": process.env.MOVIES_API_KEY,
-    "X-RapidAPI-Host": process.env.MOVIES_API_HOST
-  },
-  params: {
-    startYear: "2020",
-    endYear: "2022",
-    titleType: "movie",
-    info: "base_info",
-    limit: "50",
-  },
-};
-
-const prisma = new PrismaClient();
-
 function dtoToMovie(movieDto: any): Movie {
   const {
     titleText,
@@ -42,11 +24,29 @@ function dtoToMovie(movieDto: any): Movie {
   };
 }
 
+const options: AxiosRequestConfig = {
+  method: "GET",
+  baseURL: process.env.MOVIES_API_URL,
+  headers: {
+    "X-RapidAPI-Key": process.env.MOVIES_API_KEY,
+    "X-RapidAPI-Host": process.env.MOVIES_API_HOST
+  },
+  params: {
+    startYear: "2020",
+    endYear: "2022",
+    titleType: "movie",
+    info: "base_info",
+    limit: "50",
+  },
+};
+
+const prisma = new PrismaClient();
+
 async function isPopulated(): Promise<boolean> {
   return await prisma.movie.findFirst({ where: { id: { gt: 0 } } }) !== null;
 }
 
-async function seed() {
+async function seed(): Promise<void> {
   if (await isPopulated()) {
     return;
   }
