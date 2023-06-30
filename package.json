@@ -5,7 +5,7 @@
   "main": "./dist/index.ts",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "start": "npm run build && node ./dist/index.js",
+    "start": "npm run dev:seed && npm run build && node ./dist/index.js",
     "migrate:deploy": "prisma migrate deploy",
     "migrate:dev": "prisma migrate dev",
     "dev:seed": "prisma db seed",
