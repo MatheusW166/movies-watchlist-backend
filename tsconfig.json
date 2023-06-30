@@ -3,7 +3,6 @@
     "target": "es2020",
     "module": "CommonJS",
     "outDir": "dist",
-    "noImplicitAny": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
@@ -13,5 +12,8 @@
         "*"
       ]
     }
+  },
+  "ts-node": {
+    "esm": true
   }
 }

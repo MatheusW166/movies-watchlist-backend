@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PrismaClient } from "@prisma/client";
 import axios, { AxiosRequestConfig } from "axios";
 import { Movie } from "@/services/movie";
 
-function dtoToMovie(movieDto: any): Movie {
+function dtoToMovie(movieDto): Movie {
   const {
     titleText,
     releaseDate,
