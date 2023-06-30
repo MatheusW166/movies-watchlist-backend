@@ -4,12 +4,12 @@
   "description": "",
   "main": "./dist/index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "npm run build && node ./dist/index.js",
     "migrate:deploy": "prisma migrate deploy",
     "migrate:dev": "prisma migrate dev",
     "dev:seed": "prisma db seed",
-    "dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/index.ts' -e ts"
+    "dev": "nodemon ./src/index.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -42,6 +42,7 @@
     "nodemon": "^2.0.22",
     "prisma": "^4.16.1",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.6",
     "typescript": "^5.1.5"
   }
 }
