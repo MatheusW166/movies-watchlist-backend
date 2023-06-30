@@ -1,5 +1,5 @@
 import { prisma } from "@/config";
-import { Movie, MovieCreateResult } from "@/services/movie";
+import { Movie, MovieCreateResult, MovieUpdate } from "@/services/movie";
 
 async function create(movie: Movie): Promise<MovieCreateResult> {
   return await prisma.movie.create({
@@ -10,6 +10,13 @@ async function create(movie: Movie): Promise<MovieCreateResult> {
 async function deleteById(id: number): Promise<void> {
   await prisma.movie.delete({
     where: { id }
+  });
+}
+
+async function update(id: number, movie: MovieUpdate): Promise<MovieCreateResult> {
+  return await prisma.movie.update({
+    where: { id },
+    data: movie
   });
 }
 
@@ -45,23 +52,14 @@ async function findManyByTitle(title: string): Promise<MovieCreateResult[]> {
   });
 }
 
-async function markAsWatched(userId: number, movieId: number): Promise<void> {
-  await prisma.watched.create({
-    data: {
-      movieId,
-      userId
-    }
-  });
-}
-
 const movieRepository = {
   create,
   deleteById,
   findManyByTitle,
   findFirstByTitle,
-  markAsWatched,
   findById,
-  findAll
+  findAll,
+  update
 };
 
 export default movieRepository;

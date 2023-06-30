@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import httpStatus from "http-status-codes";
 import { DefaultError } from "@/errors";
 
 type UnknownError = DefaultError | Error;
@@ -18,7 +19,9 @@ function handle(error: UnknownError, _req: Request, res: Response, next: NextFun
     return;
   }
 
-  res.sendStatus(500);
+  console.log(error.message);
+
+  res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
 }
 
 export const errorMiddlewares = { handle };

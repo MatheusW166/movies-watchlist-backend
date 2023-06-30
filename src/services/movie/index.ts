@@ -1,4 +1,4 @@
-import { Movie, MovieCreateResult } from "./types";
+import { Movie, MovieCreateResult, MovieUpdate } from "./types";
 import { ConflictError, NotFoundError } from "@/errors";
 import movieRepository from "@/repositories/movie";
 
@@ -22,6 +22,16 @@ async function deleteById(id: number): Promise<void> {
   await movieRepository.deleteById(id);
 }
 
+async function update(id: number, movie: MovieUpdate): Promise<MovieCreateResult> {
+  const movieFound = await movieRepository.findById(id);
+
+  if (movieFound === null) {
+    throw new NotFoundError(["movie not found"]);
+  }
+
+  return await movieRepository.update(id, movie);
+}
+
 async function findManyByTitle(title: string): Promise<MovieCreateResult[]> {
   return await movieRepository.findManyByTitle(title);
 }
@@ -34,7 +44,8 @@ const movieServices = {
   create,
   deleteById,
   findManyByTitle,
-  findAll
+  findAll,
+  update
 };
 
 

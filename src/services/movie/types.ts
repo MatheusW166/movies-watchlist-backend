@@ -10,3 +10,5 @@ export type Movie = {
 export type MovieCreateResult = Movie & {
   id: number
 };
+
+export type MovieUpdate = Partial<Movie>;
