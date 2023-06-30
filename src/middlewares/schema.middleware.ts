@@ -4,19 +4,19 @@ import { Schema } from "joi";
 
 type MiddlewareFn = (req: Request, res: Response, next: NextFunction) => void;
 
-function validateQuery(schema: Schema): MiddlewareFn {
+function validateQuery<T>(schema: Schema<T>): MiddlewareFn {
   return validate(schema, "query");
 }
 
-function validateParams(schema: Schema): MiddlewareFn {
+function validateParams<T>(schema: Schema<T>): MiddlewareFn {
   return validate(schema, "params");
 }
 
-function validateBody(schema: Schema): MiddlewareFn {
+function validateBody<T>(schema: Schema<T>): MiddlewareFn {
   return validate(schema, "body");
 }
 
-function validate(schema: Schema, field: "body" | "params" | "query"): MiddlewareFn {
+function validate<T>(schema: Schema<T>, field: "body" | "params" | "query"): MiddlewareFn {
   return (req, res, next) => {
 
     const { error, value } = schema.validate(req[field], { abortEarly: false });
