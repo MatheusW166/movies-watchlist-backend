@@ -19,8 +19,6 @@ function handle(error: UnknownError, _req: Request, res: Response, next: NextFun
     return;
   }
 
-  console.log(error.message);
-
   res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
 }
 
