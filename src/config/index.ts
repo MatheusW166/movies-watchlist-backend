@@ -1,1 +1,1 @@
-export * from "./database.config";
+export * from "./prisma.config";

@@ -1,3 +1,3 @@
 import { Request } from "express";
 
-export type RequestWithId = Request & { params: { id: number } };
+export type AuthRequest = Request & { params: { id: number } };
