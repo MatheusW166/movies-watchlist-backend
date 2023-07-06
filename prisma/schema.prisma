@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,11 +8,78 @@ datasource db {
 }
 
 model Movie {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
-  releaseDate DateTime
-  imdbScore   Float
-  plot        String
-  genre       String
-  poster      String
+  releaseDate DateTime?
+  imdbScore   Float?
+  plot        String?
+  genres      Genre[]
+  poster      String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  rates       Rate[]
+  wantsWatch  WantsWatch[]
+
+  @@map("movies")
+}
+
+model Genre {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  movies    Movie[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("genres")
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  name       String
+  nickName   String       @unique
+  email      String       @unique
+  password   String
+  photoUrl   String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  rates      Rate[]
+  wantsWatch WantsWatch[]
+  sessions   Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("sessions")
+}
+
+model WantsWatch {
+  userId  Int
+  user    User  @relation(fields: [userId], references: [id])
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
+
+  @@id([userId, movieId])
+  @@map("wants_watch")
+}
+
+model Rate {
+  userId           Int
+  user             User     @relation(fields: [userId], references: [id])
+  movieId          Int
+  movie            Movie    @relation(fields: [movieId], references: [id])
+  watchedAt        DateTime
+  recommends       Boolean
+  personalRate     Float
+  personalAnalysis String?
+
+  @@id([userId, movieId])
+  @@map("rates")
 }
