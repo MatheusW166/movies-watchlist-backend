@@ -22,6 +22,6 @@ movieRouter
 		movieControllers.deleteMovie,
 	)
 	.get("/", movieControllers.findAll)
-	.get("/search", movieControllers.findMany);
+	.get("/search", movieControllers.findManyByTitle);
 
 export { movieRouter };

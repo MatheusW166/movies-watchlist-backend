@@ -23,7 +23,7 @@ async function deleteMovie(req: AuthRequest, res: Response): Promise<void> {
 	res.sendStatus(httpStatus.NO_CONTENT);
 }
 
-async function findMany(req: Request, res: Response): Promise<void> {
+async function findManyByTitle(req: Request, res: Response): Promise<void> {
 	const { title } = req.query;
 
 	if (title && typeof title !== "string") {
@@ -46,7 +46,7 @@ async function findAll(_req: Request, res: Response): Promise<void> {
 export const movieControllers = {
 	create,
 	deleteMovie,
-	findMany,
+	findManyByTitle,
 	update,
 	findAll
 };
