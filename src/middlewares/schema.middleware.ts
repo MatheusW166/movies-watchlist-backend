@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status-codes";
 import { Schema } from "joi";
+import { mapErrorDetailsFromJoi } from "@/utils";
 
 type MiddlewareFn = (req: Request, res: Response, next: NextFunction) => void;
 
@@ -22,7 +23,7 @@ function validate<T>(schema: Schema<T>, field: "body" | "params" | "query"): Mid
 		const { error, value } = schema.validate(req[field], { abortEarly: false });
 
 		if (error && error.details.length > 0) {
-			res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.details.map((detail) => detail.message));
+			res.status(httpStatus.UNPROCESSABLE_ENTITY).send(mapErrorDetailsFromJoi(error.details));
 			return;
 		}
 

@@ -1,10 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status-codes";
-import { DefaultError, UnknownError } from "@/errors";
-
-function isDefaultError(error: UnknownError): error is DefaultError {
-	return (error as DefaultError).status !== undefined;
-}
+import { UnknownError } from "@/errors";
+import { convertErrorsArrayToObject, isDefaultError } from "@/utils";
 
 function handle(error: UnknownError, _req: Request, res: Response, next: NextFunction): void {
 	if (!error) {
@@ -13,11 +10,10 @@ function handle(error: UnknownError, _req: Request, res: Response, next: NextFun
 	}
 
 	if (isDefaultError(error)) {
-		res.status(error.status).send(error.details);
+		res.status(error.status).send(convertErrorsArrayToObject(error.details));
 		return;
 	}
 
-	console.log(error.message);
 	res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
 }
 
