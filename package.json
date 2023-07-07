@@ -1,48 +1,48 @@
 {
-  "name": "movies-watchlist-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.ts",
-  "scripts": {
-    "build": "tsc -p tsconfig.build.json && tsc-alias",
-    "start": "node ./dist/index.js",
-    "migrate:deploy": "prisma migrate deploy",
-    "migrate:dev": "prisma migrate dev",
-    "dev:seed": "prisma db seed",
-    "dev": "nodemon ./src/index.ts"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@prisma/client": "^4.16.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "dotenv-expand": "^10.0.0",
-    "express": "^4.18.2",
-    "express-async-errors": "^3.1.1",
-    "http-status-codes": "^2.2.0",
-    "joi": "^17.9.2"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.17",
-    "@types/joi": "^17.2.3",
-    "@types/node": "^20.3.2",
-    "@types/nodemon": "^1.19.2",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "axios": "^1.4.0",
-    "eslint": "^8.26.0",
-    "eslint-import-resolver-typescript": "^3.5.2",
-    "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.22",
-    "prisma": "^4.16.1",
-    "ts-node": "^10.9.1",
-    "tsc-alias": "^1.8.6",
-    "typescript": "^5.1.5"
-  }
+	"name": "movies-watchlist-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/index.ts",
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json && tsc-alias",
+		"start": "node ./dist/index.js",
+		"migrate:deploy": "prisma migrate deploy",
+		"migrate:dev": "prisma migrate dev",
+		"dev:seed": "prisma db seed",
+		"dev": "nodemon ./src/index.ts"
+	},
+	"prisma": {
+		"seed": "ts-node --require ts-node/register --require tsconfig-paths/register prisma/seed.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@prisma/client": "^4.16.1",
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"dotenv-expand": "^10.0.0",
+		"express": "^4.18.2",
+		"express-async-errors": "^3.1.1",
+		"http-status-codes": "^2.2.0",
+		"joi": "^17.9.2"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.13",
+		"@types/express": "^4.17.17",
+		"@types/joi": "^17.2.3",
+		"@types/node": "^20.3.2",
+		"@types/nodemon": "^1.19.2",
+		"@typescript-eslint/eslint-plugin": "^5.60.1",
+		"@typescript-eslint/parser": "^5.60.1",
+		"axios": "^1.4.0",
+		"eslint": "^8.26.0",
+		"eslint-import-resolver-typescript": "^3.5.2",
+		"eslint-plugin-import": "^2.26.0",
+		"nodemon": "^2.0.22",
+		"prisma": "^4.16.1",
+		"ts-node": "^10.9.1",
+		"tsc-alias": "^1.8.6",
+		"typescript": "^5.1.5"
+	}
 }
