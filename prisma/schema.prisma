@@ -24,8 +24,7 @@ model Movie {
 }
 
 model Genre {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
+  name      String   @id
   movies    Movie[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -61,10 +60,12 @@ model Session {
 }
 
 model WantsWatch {
-  userId  Int
-  user    User  @relation(fields: [userId], references: [id])
-  movieId Int
-  movie   Movie @relation(fields: [movieId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  movieId   Int
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([userId, movieId])
   @@map("wants_watch")
@@ -79,6 +80,8 @@ model Rate {
   recommends       Boolean
   personalRate     Float
   personalAnalysis String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@id([userId, movieId])
   @@map("rates")
