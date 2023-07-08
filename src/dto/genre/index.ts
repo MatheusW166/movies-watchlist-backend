@@ -1,6 +1,6 @@
-import { BaseEntity, Genre } from "@/entities";
+import { Genre } from "@/entities";
 
-export type GenreCreateDTO = Omit<Genre, keyof BaseEntity | "movies">;
+export type GenreCreateDTO = Pick<Genre, "name">;
 export type GenreUpdateDTO = Partial<GenreCreateDTO>;
 
 export type GenreCreateParams = GenreCreateDTO;
