@@ -1,54 +1,68 @@
+import includeDefault from "./include.default";
 import { prisma } from "@/config";
-import { Movie, MovieCreateDTO, MovieUpdateDTO } from "@/dto";
+import { GenreCreateParams, GenreUpdateParams, MovieCreateParams, MovieUpdateParams } from "@/dto";
+import { Movie } from "@/entities";
 
-async function create(movie: MovieCreateDTO): Promise<Movie> {
-	return await prisma.movie.create({
-		data: movie,
+async function create(movie: MovieCreateParams, genres?: GenreCreateParams[]): Promise<Movie> {
+	return prisma.movie.create({
+		data: {
+			...movie,
+			genres: { connect: genres },
+		},
+		include: includeDefault,
 	});
 }
 
 async function deleteById(id: number): Promise<void> {
 	await prisma.movie.delete({
-		where: { id }
+		where: { id },
+		include: includeDefault
 	});
 }
 
-async function update(id: number, movie: MovieUpdateDTO): Promise<Movie> {
-	return await prisma.movie.update({
+async function update(id: number, movie: MovieUpdateParams, genres?: GenreUpdateParams[]): Promise<Movie> {
+	return prisma.movie.update({
 		where: { id },
-		data: movie
+		data: {
+			...movie,
+			genres: { set: genres }
+		},
+		include: includeDefault
 	});
 }
 
 async function findById(id: number): Promise<Movie | null> {
-	return await prisma.movie.findUnique({
-		where: { id }
+	return prisma.movie.findUnique({
+		where: { id },
+		include: includeDefault
 	});
 }
 
 async function findAll(): Promise<Movie[]> {
-	return await prisma.movie.findMany();
+	return prisma.movie.findMany({ include: includeDefault });
 }
 
 async function findFirstByTitle(title: string): Promise<Movie | null> {
-	return await prisma.movie.findFirst({
+	return prisma.movie.findFirst({
 		where: {
 			title: {
 				equals: title,
 				mode: "insensitive"
 			}
-		}
+		},
+		include: includeDefault
 	});
 }
 
 async function findManyByTitle(title: string): Promise<Movie[]> {
-	return await prisma.movie.findMany({
+	return prisma.movie.findMany({
 		where: {
 			title: {
 				contains: title,
 				mode: "insensitive"
 			}
-		}
+		},
+		include: includeDefault
 	});
 }
 
