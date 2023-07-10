@@ -1,18 +1,20 @@
 import Joi from "joi";
-import { Movie } from "@/dto";
+import { MovieCreateDTO, MovieUpdateDTO } from "@/dto";
 
-const create = Joi.object<Movie>({
+// TODO: fix schemas
+
+const create = Joi.object<MovieCreateDTO>({
 	title: Joi.string().required(),
-	genre: Joi.string().required(),
-	imdbScore: Joi.number().required(),
-	plot: Joi.string().required(),
-	poster: Joi.string().uri().required(),
-	releaseDate: Joi.date().required(),
-});
+	genres: Joi.array<number>().min(1).optional(),
+	imdbScore: Joi.number().optional(),
+	plot: Joi.string().optional(),
+	poster: Joi.string().uri().optional(),
+	releaseDate: Joi.date().optional(),
+}).min(6);
 
-const update = Joi.object<Movie>({
+const update = Joi.object<MovieUpdateDTO>({
 	title: Joi.string().optional(),
-	genre: Joi.string().optional(),
+	genres: Joi.array<number>().min(1).optional(),
 	imdbScore: Joi.number().optional(),
 	plot: Joi.string().optional(),
 	poster: Joi.string().uri().optional(),

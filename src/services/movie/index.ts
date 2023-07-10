@@ -2,36 +2,24 @@ import { ConflictError, NotFoundError } from "@/errors";
 import { movieRepository } from "@/repositories";
 import { MovieCreateDTO, MovieUpdateDTO } from "@/dto";
 import { Movie } from "@/entities";
-import { exclude } from "@/utils";
+import { exclude, mapToGenresArray } from "@/utils";
 
 async function create(movie: MovieCreateDTO): Promise<Movie> {
 	const movieFound = await movieRepository.findFirstByTitle(movie.title);
-
-	if (movieFound !== null) {
-		throw new ConflictError(["this movie already exists"]);
-	}
-
-	return movieRepository.create(exclude(movie, "genres"), movie.genres?.map((name) => ({ name })));
+	if (movieFound !== null) throw new ConflictError(["this movie already exists"]);
+	return movieRepository.create(exclude(movie, "genres"), mapToGenresArray(movie.genres));
 }
 
 async function deleteById(id: number): Promise<void> {
 	const movieFound = await movieRepository.findById(id);
-
-	if (movieFound === null) {
-		throw new NotFoundError(["movie not found"]);
-	}
-
+	if (movieFound === null) throw new NotFoundError(["movie not found"]);
 	await movieRepository.deleteById(id);
 }
 
 async function update(id: number, movie: MovieUpdateDTO): Promise<Movie> {
 	const movieFound = await movieRepository.findById(id);
-
-	if (movieFound === null) {
-		throw new NotFoundError(["movie not found"]);
-	}
-
-	return movieRepository.update(id, exclude(movie, "genres"), movie.genres?.map((name) => ({ name })));
+	if (movieFound === null) throw new NotFoundError(["movie not found"]);
+	return movieRepository.update(id, exclude(movie, "genres"), mapToGenresArray(movie.genres));
 }
 
 async function findManyByTitle(title: string): Promise<Movie[]> {

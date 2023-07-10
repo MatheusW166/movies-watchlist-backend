@@ -3,24 +3,24 @@ import { prisma } from "@/config";
 import { GenreCreateParams, GenreUpdateParams, MovieCreateParams, MovieUpdateParams } from "@/dto";
 import { Movie } from "@/entities";
 
-async function create(movie: MovieCreateParams, genres?: GenreCreateParams[]): Promise<Movie> {
+async function create(movie: MovieCreateParams, genres?: GenreCreateParams[]) {
 	return prisma.movie.create({
 		data: {
 			...movie,
 			genres: { connect: genres },
 		},
 		include: includeDefault,
-	});
+	}) as Promise<Movie>;
 }
 
-async function deleteById(id: number): Promise<void> {
+async function deleteById(id: number) {
 	await prisma.movie.delete({
 		where: { id },
 		include: includeDefault
 	});
 }
 
-async function update(id: number, movie: MovieUpdateParams, genres?: GenreUpdateParams[]): Promise<Movie> {
+async function update(id: number, movie: MovieUpdateParams, genres?: GenreUpdateParams[]) {
 	return prisma.movie.update({
 		where: { id },
 		data: {
@@ -28,21 +28,21 @@ async function update(id: number, movie: MovieUpdateParams, genres?: GenreUpdate
 			genres: { set: genres }
 		},
 		include: includeDefault
-	});
+	}) as Promise<Movie>;
 }
 
-async function findById(id: number): Promise<Movie | null> {
+async function findById(id: number) {
 	return prisma.movie.findUnique({
 		where: { id },
 		include: includeDefault
-	});
+	}) as Promise<Movie | null>;
 }
 
-async function findAll(): Promise<Movie[]> {
-	return prisma.movie.findMany({ include: includeDefault });
+async function findAll() {
+	return prisma.movie.findMany({ include: includeDefault }) as Promise<Movie[]>;
 }
 
-async function findFirstByTitle(title: string): Promise<Movie | null> {
+async function findFirstByTitle(title: string) {
 	return prisma.movie.findFirst({
 		where: {
 			title: {
@@ -51,10 +51,10 @@ async function findFirstByTitle(title: string): Promise<Movie | null> {
 			}
 		},
 		include: includeDefault
-	});
+	}) as Promise<Movie | null>;
 }
 
-async function findManyByTitle(title: string): Promise<Movie[]> {
+async function findManyByTitle(title: string) {
 	return prisma.movie.findMany({
 		where: {
 			title: {
@@ -63,7 +63,7 @@ async function findManyByTitle(title: string): Promise<Movie[]> {
 			}
 		},
 		include: includeDefault
-	});
+	}) as Promise<Movie[]>;
 }
 
 export const movieRepository = {

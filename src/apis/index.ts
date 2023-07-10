@@ -1,1 +1,1 @@
-export * from "./rapid-api";
+export * from "./movie-api";

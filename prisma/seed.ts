@@ -1,19 +1,20 @@
 import { PrismaClient } from "@prisma/client";
-import { rapidApi } from "@/apis";
+import { mapToGenresArray } from "@/utils";
+import { movieApi } from "@/apis";
 
 const prisma = new PrismaClient();
 
-async function hasGenres(): Promise<boolean> {
+async function hasGenres() {
 	return !!(await prisma.genre.findFirst());
 }
 
-async function main(): Promise<void> {
+async function main() {
 	if (await hasGenres()) {
 		return;
 	}
-	const genres = await rapidApi.getGenres();
+	const genres = await movieApi.getGenres();
 	await prisma.genre.createMany({
-		data: genres.map((name) => ({ name }))
+		data: mapToGenresArray(genres)
 	});
 }
 

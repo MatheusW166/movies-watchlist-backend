@@ -25,17 +25,14 @@ async function deleteMovie(req: AuthRequest, res: Response): Promise<void> {
 
 async function findManyByTitle(req: Request, res: Response): Promise<void> {
 	const { title } = req.query;
-
 	if (title && typeof title !== "string") {
 		res.status(httpStatus.UNPROCESSABLE_ENTITY).send("title must be a string");
 		return;
 	}
-
 	if (!title) {
 		res.send(await movieServices.findAll());
 		return;
 	}
-
 	res.send(await movieServices.findManyByTitle(title as string));
 }
 
